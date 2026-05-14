@@ -4,17 +4,13 @@ interface Props {
   title: string;
   theme: string;
   questionCount: number;
-  sessionLength: number;
-  onStart: (sessionLength: number) => void;
+  onStart: () => void;
 }
-
-const SESSION_LENGTHS = [45, 60, 90];
 
 export default function SessionPreamble({
   title,
   theme,
   questionCount,
-  sessionLength,
   onStart,
 }: Props) {
   return (
@@ -26,26 +22,10 @@ export default function SessionPreamble({
         <p className="preamble-count">
           {questionCount} question{questionCount !== 1 ? "s" : ""} this week
         </p>
-
-        <div className="preamble-length-section">
-          <p className="preamble-length-label">Session length</p>
-          <div className="preamble-length-options" role="group" aria-label="Session length">
-            {SESSION_LENGTHS.map((len) => (
-              <button
-                key={len}
-                className={`preamble-length-btn${sessionLength === len ? " preamble-length-btn--active" : ""}`}
-                onClick={() => onStart(len)}
-                aria-pressed={sessionLength === len}
-              >
-                {len} min
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
 
       <div className="preamble-footer">
-        <button className="btn-primary" onClick={() => onStart(sessionLength)}>
+        <button className="btn-primary" onClick={onStart}>
           Start session
         </button>
       </div>

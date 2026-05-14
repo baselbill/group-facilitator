@@ -377,32 +377,6 @@ body {
   gap: 10px;
 }
 
-.card-timer {
-  font-family: monospace;
-  font-weight: 600;
-  color: var(--text-primary);
-  font-size: 13px;
-  letter-spacing: 0.05em;
-}
-
-/* Timer bar */
-.timer-bar-wrap {
-  padding: 8px 20px 4px;
-  flex-shrink: 0;
-}
-
-.timer-bar {
-  height: 3px;
-  background: var(--border);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.timer-fill {
-  height: 100%;
-  border-radius: 2px;
-  min-width: 2px;
-}
 
 /* Scrollable body */
 .card-body {

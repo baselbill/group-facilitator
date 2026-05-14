@@ -1,16 +1,8 @@
-export type SituationTag =
-  | "opens discussion"
-  | "for the quiet member"
-  | "if someone is dominating"
-  | "if conversation goes off-track"
-  | "to close a long response";
-
 export type QuestionState = "pending" | "covered" | "skipped";
 
-export interface Prompt {
+export interface DiscussionQuestion {
   id: string;
-  situation_tag: SituationTag;
-  prompt_text: string;
+  text: string;
 }
 
 export interface Question {
@@ -19,7 +11,7 @@ export interface Question {
   question_text: string;
   answer_text: string;
   scripture_refs: string[];
-  prompts: Prompt[];
+  discussion_questions: DiscussionQuestion[];
 }
 
 export interface Session {

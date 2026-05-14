@@ -27,8 +27,6 @@ export default function SessionPage({ params }: Props) {
 
   const [phase, setPhase] = useState<Phase>("preamble");
   const [questionIndex, setQuestionIndex] = useState(0);
-  const [sessionLengthMin, setSessionLengthMin] = useState(60);
-  const [sessionStarted, setSessionStarted] = useState(false);
 
   // On mount: check if there's an in-progress session to restore
   useEffect(() => {
@@ -39,7 +37,6 @@ export default function SessionPage({ params }: Props) {
       // Has in-progress state — skip preamble and restore position
       setQuestionIndex(pending === -1 ? ids.length - 1 : pending);
       setPhase("session");
-      setSessionStarted(true);
     }
   }, [studyId, sessionId, session]);
 
@@ -71,14 +68,8 @@ export default function SessionPage({ params }: Props) {
   const currentQuestion = questions[questionIndex];
   const isLast = questionIndex === questions.length - 1;
 
-  function handleStart(len: number) {
-    setSessionLengthMin(len);
-    setSessionStarted(true);
+  function handleStart() {
     setPhase("session");
-  }
-
-  function handleSessionStart() {
-    setSessionStarted(true);
   }
 
   function advance(state: "covered" | "skipped") {
@@ -98,7 +89,6 @@ export default function SessionPage({ params }: Props) {
           title={session.title}
           theme={session.theme}
           questionCount={questions.length}
-          sessionLength={sessionLengthMin}
           onStart={handleStart}
         />
       </main>
@@ -120,11 +110,8 @@ export default function SessionPage({ params }: Props) {
         questionIndex={questionIndex}
         totalQuestions={questions.length}
         isLast={isLast}
-        sessionLengthMin={sessionLengthMin}
         onNext={() => advance("covered")}
         onSkip={() => advance("skipped")}
-        onSessionStart={handleSessionStart}
-        sessionStarted={sessionStarted}
       />
     </main>
   );

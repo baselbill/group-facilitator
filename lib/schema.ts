@@ -1,17 +1,8 @@
 import { z } from "zod";
 
-const SituationTagSchema = z.enum([
-  "opens discussion",
-  "for the quiet member",
-  "if someone is dominating",
-  "if conversation goes off-track",
-  "to close a long response",
-]);
-
-const PromptSchema = z.object({
+const DiscussionQuestionSchema = z.object({
   id: z.string(),
-  situation_tag: SituationTagSchema,
-  prompt_text: z.string(),
+  text: z.string(),
 });
 
 const QuestionSchema = z.object({
@@ -20,7 +11,7 @@ const QuestionSchema = z.object({
   question_text: z.string(),
   answer_text: z.string(),
   scripture_refs: z.array(z.string()),
-  prompts: z.array(PromptSchema),
+  discussion_questions: z.array(DiscussionQuestionSchema),
 });
 
 const SessionSchema = z.object({
