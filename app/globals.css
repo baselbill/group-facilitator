@@ -709,38 +709,41 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-.modal-text {
+.modal-ref {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin: 0 0 12px;
+  text-transform: uppercase;
+}
+
+.modal-verse-text {
+  font-size: 17px;
+  font-family: Georgia, serif;
+  line-height: 1.7;
+  color: var(--text-primary);
+  margin: 0 0 16px;
+  white-space: pre-line;
+}
+
+.modal-translation {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.modal-loading {
   font-size: 14px;
-  color: var(--text-body);
-  line-height: 1.6;
-  margin: 0 0 20px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 0;
 }
 
-.modal-links {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.modal-link-btn {
-  display: block;
-  background: var(--cta-bg);
-  color: var(--cta-text);
-  text-decoration: none;
-  border: none;
-  border-radius: 8px;
-  padding: 14px 20px;
-  font-size: 15px;
-  font-weight: 500;
-  text-align: center;
-  cursor: pointer;
-  transition: opacity 0.15s;
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-link-btn:active {
-  opacity: 0.85;
+.modal-error {
+  font-size: 14px;
+  color: var(--timer-red);
+  margin: 0;
+  line-height: 1.5;
 }
