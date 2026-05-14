@@ -1,0 +1,265 @@
+{
+  "id": "heidelberg",
+  "title": "Heidelberg Catechism",
+  "tradition": "Reformed",
+  "description": "The Heidelberg Catechism (1563) — a confession of faith in 52 Lord's Days",
+  "session_unit_label": "Lord's Day",
+  "sessions": [
+    {
+      "id": "ld-1",
+      "title": "Lord's Day 1",
+      "week_number": 1,
+      "session_number": 1,
+      "theme": "Man's Only Comfort",
+      "questions": [
+        {
+          "id": "q1",
+          "question_number": 1,
+          "question_text": "What is your only comfort in life and death?",
+          "answer_text": "That I am not my own, but belong — body and soul, in life and in death — to my faithful Savior, Jesus Christ. He has fully paid for all my sins with his precious blood, and has set me free from the tyranny of the devil. He also watches over me in such a way that not a hair can fall from my head without the will of my Father in heaven; in fact, all things must work together for my salvation. Because I belong to him, Christ, by his Holy Spirit, assures me of eternal life and makes me wholeheartedly willing and ready from now on to live for him.",
+          "scripture_refs": [
+            "Rom. 8:35–39",
+            "1 Cor. 6:19–20",
+            "Heb. 2:14–15",
+            "Matt. 10:29–31",
+            "Rom. 8:28"
+          ],
+          "prompts": [
+            {
+              "id": "q1-p1",
+              "situation_tag": "opens discussion",
+              "prompt_text": "What word in that answer surprised you the first time you read it?"
+            },
+            {
+              "id": "q1-p2",
+              "situation_tag": "for the quiet member",
+              "prompt_text": "Some people hold this comfort differently in hard seasons — has anyone experienced that gap between knowing it and feeling it?"
+            },
+            {
+              "id": "q1-p3",
+              "situation_tag": "if conversation goes off-track",
+              "prompt_text": "That's worth a whole conversation on its own — for now, what does 'not my own' feel like on an ordinary Tuesday?"
+            }
+          ]
+        },
+        {
+          "id": "q2",
+          "question_number": 2,
+          "question_text": "How many things must you know that you may live and die happily?",
+          "answer_text": "Three things: first, the greatness of my sin and wretchedness; second, how I am freed from all my sins and their wretched consequences; third, what gratitude I owe to God for such redemption.",
+          "scripture_refs": [
+            "Matt. 22:37–40",
+            "Rom. 3:9–10",
+            "1 John 1:9–10",
+            "John 17:3"
+          ],
+          "prompts": [
+            {
+              "id": "q2-p1",
+              "situation_tag": "opens discussion",
+              "prompt_text": "Which of the three — sin, redemption, gratitude — do you find it easiest to skip past?"
+            },
+            {
+              "id": "q2-p2",
+              "situation_tag": "if someone is dominating",
+              "prompt_text": "Good thought — what do others think? Does the order of those three things matter, or could they come in any sequence?"
+            },
+            {
+              "id": "q2-p3",
+              "situation_tag": "to close a long response",
+              "prompt_text": "Let's hold that and come back — if gratitude is the third thing, what does it actually look like in a regular week?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ld-2",
+      "title": "Lord's Day 2",
+      "week_number": 2,
+      "session_number": 2,
+      "theme": "Man's Sin and Misery",
+      "questions": [
+        {
+          "id": "q3",
+          "question_number": 3,
+          "question_text": "Where do you know your sin and misery from?",
+          "answer_text": "From the law of God.",
+          "scripture_refs": [
+            "Rom. 3:20",
+            "Rom. 7:7"
+          ],
+          "prompts": [
+            {
+              "id": "q3-p1",
+              "situation_tag": "opens discussion",
+              "prompt_text": "The answer is just four words. What's striking about how short it is?"
+            },
+            {
+              "id": "q3-p2",
+              "situation_tag": "for the quiet member",
+              "prompt_text": "Has anyone had a moment where the law showed them something about themselves they hadn't seen before?"
+            },
+            {
+              "id": "q3-p3",
+              "situation_tag": "if conversation goes off-track",
+              "prompt_text": "Let's bring it back — if the law is a mirror, what does it reflect that we'd rather not see?"
+            }
+          ]
+        },
+        {
+          "id": "q4",
+          "question_number": 4,
+          "question_text": "What does God's law require of us?",
+          "answer_text": "Christ teaches us this in a summary in Matthew 22:37–40: Love the Lord your God with all your heart and with all your soul and with all your mind. This is the first and greatest commandment. And the second is like it: Love your neighbor as yourself. All the Law and the Prophets hang on these two commandments.",
+          "scripture_refs": [
+            "Matt. 22:37–40",
+            "Luke 10:27"
+          ],
+          "prompts": [
+            {
+              "id": "q4-p1",
+              "situation_tag": "opens discussion",
+              "prompt_text": "Jesus says 'all your heart, soul, and mind.' Which of those three do you find hardest to bring to God?"
+            },
+            {
+              "id": "q4-p2",
+              "situation_tag": "if someone is dominating",
+              "prompt_text": "That's a strong point — let's see if anyone else wants to add to it. Does 'love your neighbor as yourself' assume you already love yourself?"
+            },
+            {
+              "id": "q4-p3",
+              "situation_tag": "to close a long response",
+              "prompt_text": "Good — let's mark that and keep going. If this is what God requires, what does question 5 have to say next?"
+            }
+          ]
+        },
+        {
+          "id": "q5",
+          "question_number": 5,
+          "question_text": "Can you keep all this perfectly?",
+          "answer_text": "No. I have a natural tendency to hate God and my neighbor.",
+          "scripture_refs": [
+            "Rom. 3:10–12",
+            "Gen. 6:5",
+            "Jer. 17:9",
+            "Rom. 7:23–24",
+            "Titus 3:3"
+          ],
+          "prompts": [
+            {
+              "id": "q5-p1",
+              "situation_tag": "opens discussion",
+              "prompt_text": "The catechism doesn't say 'I try but fall short' — it says 'I hate.' What's the difference?"
+            },
+            {
+              "id": "q5-p2",
+              "situation_tag": "for the quiet member",
+              "prompt_text": "This is a hard one to sit with. Has anyone wrestled with what it means that this tendency is called 'natural'?"
+            },
+            {
+              "id": "q5-p3",
+              "situation_tag": "if conversation goes off-track",
+              "prompt_text": "Let's stay close to the text — if the answer is simply 'no,' how does that change what we're hoping for from ourselves?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ld-3",
+      "title": "Lord's Day 3",
+      "week_number": 3,
+      "session_number": 3,
+      "theme": "Man's Corrupt Nature",
+      "questions": [
+        {
+          "id": "q6",
+          "question_number": 6,
+          "question_text": "Did God create man evil and perverse?",
+          "answer_text": "No. God created man good and in his image, that is, in true righteousness and holiness, so that he might rightly know God his creator, love him with all his heart, and live with him in eternal blessedness to praise and glorify him.",
+          "scripture_refs": [
+            "Gen. 1:31",
+            "Gen. 1:26–27",
+            "Eph. 4:24",
+            "Col. 3:10"
+          ],
+          "prompts": [
+            {
+              "id": "q6-p1",
+              "situation_tag": "opens discussion",
+              "prompt_text": "If God made man good, where does that leave us when we say 'that's just human nature'?"
+            },
+            {
+              "id": "q6-p2",
+              "situation_tag": "for the quiet member",
+              "prompt_text": "The answer says man was made 'to live with God in eternal blessedness' — does anyone have a sense of what that might have looked like before the fall?"
+            },
+            {
+              "id": "q6-p3",
+              "situation_tag": "if conversation goes off-track",
+              "prompt_text": "Interesting angle — let's bring it back. If this is who we were made to be, how does it change how we think about who we are now?"
+            }
+          ]
+        },
+        {
+          "id": "q7",
+          "question_number": 7,
+          "question_text": "Then where does man's corrupt nature come from?",
+          "answer_text": "From the fall and disobedience of our first parents, Adam and Eve, in Paradise, whereby our human nature became so corrupt that we are all conceived and born in sin.",
+          "scripture_refs": [
+            "Gen. 3",
+            "Rom. 5:12–19",
+            "Ps. 51:5"
+          ],
+          "prompts": [
+            {
+              "id": "q7-p1",
+              "situation_tag": "opens discussion",
+              "prompt_text": "The catechism says 'conceived and born in sin' — not just that we sin, but that we start broken. How does that land with you?"
+            },
+            {
+              "id": "q7-p2",
+              "situation_tag": "if someone is dominating",
+              "prompt_text": "Good — let's hear from someone else. Does it feel fair that Adam's choice affects all of us?"
+            },
+            {
+              "id": "q7-p3",
+              "situation_tag": "to close a long response",
+              "prompt_text": "Let's hold that and look at question 8 — what does it say follows from this?"
+            }
+          ]
+        },
+        {
+          "id": "q8",
+          "question_number": 8,
+          "question_text": "Are we so corrupt that we are totally unable to do any good and inclined toward all evil?",
+          "answer_text": "Yes, unless we are regenerated by the Spirit of God.",
+          "scripture_refs": [
+            "John 3:5–6",
+            "Gen. 6:5",
+            "Job 14:4",
+            "Isa. 53:6"
+          ],
+          "prompts": [
+            {
+              "id": "q8-p1",
+              "situation_tag": "opens discussion",
+              "prompt_text": "The answer is 'yes — unless.' What is the weight of that 'unless'?"
+            },
+            {
+              "id": "q8-p2",
+              "situation_tag": "for the quiet member",
+              "prompt_text": "Total inability is a strong claim. Has anyone wrestled with how to hold it while still feeling responsible for their choices?"
+            },
+            {
+              "id": "q8-p3",
+              "situation_tag": "if conversation goes off-track",
+              "prompt_text": "Worth coming back to — for now, what does regeneration by the Spirit actually change, according to this answer?"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
