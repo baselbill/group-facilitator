@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Question } from "@/lib/types";
 import PromptChip from "./PromptChip";
+import VerseModal from "./VerseModal";
 
 interface Props {
   question: Question;
@@ -32,6 +33,8 @@ export default function SessionCard({
   const [usedPrompts, setUsedPrompts] = useState<Set<string>>(new Set());
   const [timerPhase, setTimerPhase] = useState<TimerPhase>("green");
   const [timerProgress, setTimerProgress] = useState(0); // 0–1
+  const [elapsedMs, setElapsedMs] = useState(0);
+  const [selectedVerse, setSelectedVerse] = useState<string | null>(null);
   const startTimeRef = useRef<number | null>(null);
   const rafRef = useRef<number | null>(null);
 
@@ -42,6 +45,7 @@ export default function SessionCard({
     setUsedPrompts(new Set());
     setTimerPhase("green");
     setTimerProgress(0);
+    setElapsedMs(0);
     startTimeRef.current = null;
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
   }, [question.id]);
@@ -57,6 +61,7 @@ export default function SessionCard({
       const elapsed = Date.now() - startTimeRef.current;
       const progress = Math.min(elapsed / perQuestionMs, 1);
       setTimerProgress(progress);
+      setElapsedMs(elapsed);
 
       if (progress >= 1) {
         setTimerPhase("red");
@@ -98,6 +103,13 @@ export default function SessionCard({
       ? "#C4853A"
       : "#B04040";
 
+  const formatTime = (ms: number) => {
+    const totalSeconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
+
   return (
     <div className="card-screen">
       {/* Header */}
@@ -105,6 +117,7 @@ export default function SessionCard({
         <span className="card-study-name">Heidelberg Catechism</span>
         <span className="card-session-label">
           Q{questionIndex + 1} · {totalQuestions} this week
+          {sessionStarted && <span className="card-timer">{formatTime(elapsedMs)}</span>}
         </span>
       </header>
 
@@ -127,7 +140,19 @@ export default function SessionCard({
         <p className="card-question">{question.question_text}</p>
         <p className="card-answer">{question.answer_text}</p>
         {question.scripture_refs.length > 0 && (
-          <p className="card-refs">{question.scripture_refs.join(" · ")}</p>
+          <p className="card-refs">
+            {question.scripture_refs.map((ref, idx) => (
+              <span key={idx}>
+                {idx > 0 && " · "}
+                <button
+                  className="verse-link"
+                  onClick={() => setSelectedVerse(ref)}
+                >
+                  {ref}
+                </button>
+              </span>
+            ))}
+          </p>
         )}
 
         <hr className="card-divider" />
@@ -150,6 +175,13 @@ export default function SessionCard({
           )}
         </div>
       </div>
+
+      {selectedVerse && (
+        <VerseModal
+          verseRef={selectedVerse}
+          onClose={() => setSelectedVerse(null)}
+        />
+      )}
 
       {/* Timer + bottom bar */}
       <div className="card-footer">
