@@ -1,13 +1,14 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { use, useCallback, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { getStudy, getSession } from "@/lib/content";
 import {
   writeState,
   firstPendingIndex,
   markSessionDone,
 } from "@/lib/sessionState";
+import { generateRoomCode, useRoom } from "@/lib/room";
 import SessionPreamble from "@/components/SessionPreamble";
 import SessionCard from "@/components/SessionCard";
 import CompletionScreen from "@/components/CompletionScreen";
@@ -21,6 +22,7 @@ interface Props {
 export default function SessionPage({ params }: Props) {
   const { studyId, sessionId } = use(params);
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const { study, error } = getStudy();
   const session = study ? getSession(study, sessionId) : null;
@@ -28,17 +30,34 @@ export default function SessionPage({ params }: Props) {
   const [phase, setPhase] = useState<Phase>("preamble");
   const [questionIndex, setQuestionIndex] = useState(0);
 
+  // Room state
+  const participantRole = searchParams.get("role"); // "participant" or null (host)
+  const urlRoomCode = searchParams.get("room");
+  const [roomCode, setRoomCode] = useState<string | null>(urlRoomCode);
+
+  const handleAdvance = useCallback((idx: number) => {
+    setQuestionIndex(idx);
+    setPhase("session");
+  }, []);
+
+  const { connectionState, highlights, userId, sendHighlight, sendAdvance } =
+    useRoom(roomCode, handleAdvance);
+
   // On mount: check if there's an in-progress session to restore
   useEffect(() => {
     if (!session) return;
+    // Participants skip preamble and go straight to session
+    if (participantRole === "participant") {
+      setPhase("session");
+      return;
+    }
     const ids = session.questions.map((q) => q.id);
     const pending = firstPendingIndex(studyId, sessionId, ids);
     if (pending > 0) {
-      // Has in-progress state — skip preamble and restore position
       setQuestionIndex(pending === -1 ? ids.length - 1 : pending);
       setPhase("session");
     }
-  }, [studyId, sessionId, session]);
+  }, [studyId, sessionId, session, participantRole]);
 
   if (error || !study) {
     return (
@@ -72,13 +91,19 @@ export default function SessionPage({ params }: Props) {
     setPhase("session");
   }
 
+  function startRoom() {
+    setRoomCode(generateRoomCode());
+  }
+
   function advance(state: "covered" | "skipped") {
     writeState(studyId, sessionId, currentQuestion.id, state);
+    const nextIndex = isLast ? questionIndex : questionIndex + 1;
     if (isLast) {
       markSessionDone(studyId, sessionId);
       setPhase("done");
     } else {
-      setQuestionIndex((i) => i + 1);
+      setQuestionIndex(nextIndex);
+      sendAdvance(nextIndex);
     }
   }
 
@@ -90,6 +115,8 @@ export default function SessionPage({ params }: Props) {
           theme={session.theme}
           questionCount={questions.length}
           onStart={handleStart}
+          onStartRoom={startRoom}
+          roomCode={roomCode}
         />
       </main>
     );
@@ -112,6 +139,13 @@ export default function SessionPage({ params }: Props) {
         isLast={isLast}
         onNext={() => advance("covered")}
         onSkip={() => advance("skipped")}
+        roomCode={roomCode ?? undefined}
+        studyId={studyId}
+        sessionId={sessionId}
+        userId={userId}
+        highlights={highlights}
+        connectionState={connectionState}
+        onHighlight={sendHighlight}
       />
     </main>
   );

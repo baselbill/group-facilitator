@@ -5,6 +5,8 @@ interface Props {
   theme: string;
   questionCount: number;
   onStart: () => void;
+  onStartRoom?: () => void;
+  roomCode?: string | null;
 }
 
 export default function SessionPreamble({
@@ -12,6 +14,8 @@ export default function SessionPreamble({
   theme,
   questionCount,
   onStart,
+  onStartRoom,
+  roomCode,
 }: Props) {
   return (
     <div className="preamble-container">
@@ -25,6 +29,15 @@ export default function SessionPreamble({
       </div>
 
       <div className="preamble-footer">
+        {roomCode ? (
+          <p className="preamble-room-code">
+            Room <strong>{roomCode}</strong> ready
+          </p>
+        ) : onStartRoom ? (
+          <button className="btn-secondary" onClick={onStartRoom}>
+            Start room
+          </button>
+        ) : null}
         <button className="btn-primary" onClick={onStart}>
           Start session
         </button>

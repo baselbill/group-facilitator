@@ -1,0 +1,4 @@
+{
+  "name": "group-facilitator",
+  "main": "party/server.ts"
+}

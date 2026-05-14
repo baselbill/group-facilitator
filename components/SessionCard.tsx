@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { Question } from "@/lib/types";
+import type { HighlightMap, ConnectionState } from "@/lib/types";
 import PromptChip from "./PromptChip";
 import VerseModal from "./VerseModal";
+import HighlightableText from "./HighlightableText";
+import RoomOverlay from "./RoomOverlay";
 
 interface Props {
   question: Question;
@@ -12,6 +15,14 @@ interface Props {
   isLast: boolean;
   onNext: () => void;
   onSkip: () => void;
+  // Room props — all optional; omit for local-only mode
+  roomCode?: string;
+  studyId?: string;
+  sessionId?: string;
+  userId?: string;
+  highlights?: HighlightMap;
+  connectionState?: ConnectionState;
+  onHighlight?: (questionId: string, wordIndex: number, active: boolean) => void;
 }
 
 export default function SessionCard({
@@ -21,6 +32,13 @@ export default function SessionCard({
   isLast,
   onNext,
   onSkip,
+  roomCode,
+  studyId,
+  sessionId,
+  userId = "",
+  highlights,
+  connectionState,
+  onHighlight,
 }: Props) {
   const [usedQuestions, setUsedQuestions] = useState<Set<string>>(new Set());
   const [selectedVerse, setSelectedVerse] = useState<string | null>(null);
@@ -45,6 +63,13 @@ export default function SessionCard({
     question.discussion_questions.length > 0 &&
     question.discussion_questions.every((q) => usedQuestions.has(q.id));
 
+  const inRoom = !!roomCode;
+  const wordHighlightsForQuestion = highlights?.get(question.id);
+
+  function handleWordTap(wordIndex: number, active: boolean) {
+    onHighlight?.(question.id, wordIndex, active);
+  }
+
   return (
     <div className="card-screen">
       {/* Header */}
@@ -57,8 +82,34 @@ export default function SessionCard({
 
       {/* Scrollable content */}
       <div className="card-body">
-        <p className="card-question">{question.question_text}</p>
-        <p className="card-answer">{question.answer_text}</p>
+        {inRoom ? (
+          <>
+            <p className="card-question">
+              <HighlightableText
+                text={question.question_text}
+                questionId={question.id + "-q"}
+                userId={userId}
+                wordHighlights={highlights?.get(question.id + "-q")}
+                onTap={(wi, active) => onHighlight?.(question.id + "-q", wi, active)}
+              />
+            </p>
+            <p className="card-answer">
+              <HighlightableText
+                text={question.answer_text}
+                questionId={question.id + "-a"}
+                userId={userId}
+                wordHighlights={highlights?.get(question.id + "-a")}
+                onTap={(wi, active) => onHighlight?.(question.id + "-a", wi, active)}
+              />
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="card-question">{question.question_text}</p>
+            <p className="card-answer">{question.answer_text}</p>
+          </>
+        )}
+
         {question.scripture_refs.length > 0 && (
           <p className="card-refs">
             {question.scripture_refs.map((ref, idx) => (
@@ -95,12 +146,26 @@ export default function SessionCard({
             <p className="prompts-all-used">All questions discussed</p>
           )}
         </div>
+
+        {inRoom && (
+          <p className="room-hint">Tap any word to highlight it for the group.</p>
+        )}
       </div>
 
       {selectedVerse && (
         <VerseModal
           verseRef={selectedVerse}
           onClose={() => setSelectedVerse(null)}
+        />
+      )}
+
+      {/* Room badge */}
+      {inRoom && roomCode && studyId && sessionId && connectionState && (
+        <RoomOverlay
+          roomCode={roomCode}
+          studyId={studyId}
+          sessionId={sessionId}
+          connectionState={connectionState}
         />
       )}
 

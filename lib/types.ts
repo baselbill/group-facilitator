@@ -32,6 +32,17 @@ export interface Study {
   sessions: Session[];
 }
 
+// Room / highlighting types
+export interface RoomState {
+  roomCode: string;
+  isHost: boolean;
+}
+
+// questionId -> wordIndex -> Set of userIds
+export type HighlightMap = Map<string, Map<number, Set<string>>>;
+
+export type ConnectionState = "connecting" | "open" | "offline";
+
 export interface StoredQuestionState {
   state: QuestionState;
   timestamp: number;

@@ -721,3 +721,216 @@ body {
   margin: 0;
   line-height: 1.5;
 }
+
+/* ── Highlighting ─────────────────────────────────────────────── */
+.highlight-word {
+  display: inline;
+  background: none;
+  border: none;
+  padding: 1px 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background-color 0.15s ease;
+  line-height: inherit;
+}
+
+.highlight-word--mine {
+  outline: 1.5px solid #B46414;
+  outline-offset: 1px;
+  border-radius: 2px;
+}
+
+.room-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 8px 0 0;
+  text-align: center;
+}
+
+/* ── Room badge ───────────────────────────────────────────────── */
+.room-badge {
+  position: fixed;
+  bottom: 88px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--cta-bg);
+  color: var(--cta-text);
+  border: none;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+
+.room-badge__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.room-badge__code {
+  font-family: monospace;
+  letter-spacing: 0.12em;
+}
+
+.room-badge__count {
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  padding: 0 6px;
+  font-size: 11px;
+}
+
+/* ── Room modal ───────────────────────────────────────────────── */
+.room-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 32, 22, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.room-modal {
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 280px;
+  width: 90%;
+}
+
+.room-modal__label {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.room-modal__qr {
+  border-radius: 8px;
+}
+
+.room-modal__code {
+  font-family: monospace;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.room-modal__url {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: 0;
+  word-break: break-all;
+  text-align: center;
+}
+
+/* ── Join screen ──────────────────────────────────────────────── */
+.join-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  gap: 24px;
+}
+
+.join-heading {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: Georgia, serif;
+  margin: 0;
+}
+
+.join-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 240px;
+}
+
+.join-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  align-self: flex-start;
+}
+
+.join-input {
+  width: 100%;
+  text-align: center;
+  font-size: 28px;
+  font-family: monospace;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  padding: 12px 8px;
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  outline: none;
+}
+
+.join-input:focus {
+  border-color: var(--cta-bg);
+}
+
+.join-error {
+  font-size: 13px;
+  color: var(--timer-red);
+  margin: 0;
+}
+
+/* ── Preamble room state ──────────────────────────────────────── */
+.preamble-room-code {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+  text-align: center;
+}
+
+.preamble-room-code strong {
+  font-family: monospace;
+  letter-spacing: 0.12em;
+  color: var(--text-primary);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1.5px solid var(--cta-bg);
+  color: var(--cta-bg);
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s;
+}
+
+.btn-secondary:hover {
+  background: var(--cream-hover);
+}
