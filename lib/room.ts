@@ -4,9 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import PartySocket from "partysocket";
 import type { ConnectionState, HighlightMap } from "./types";
 import type { HighlightMsg, AdvanceMsg, RoomMsg } from "../party/server";
+import { applyHighlight, deserializeHighlights } from "./highlightState";
 
 const PARTYKIT_HOST =
-  process.env.NEXT_PUBLIC_PARTYKIT_HOST ?? "group-facilitator.billyzhou.partykit.dev";
+  process.env.NEXT_PUBLIC_PARTYKIT_HOST ?? "group-facilitator.baselbill.partykit.dev";
 
 function getUserId(): string {
   if (typeof sessionStorage === "undefined") return "anon";
@@ -31,6 +32,8 @@ export function useRoom(roomCode: string | null, onAdvance?: (idx: number) => vo
   const [highlights, setHighlights] = useState<HighlightMap>(new Map());
   const socketRef = useRef<PartySocket | null>(null);
   const userId = useRef(getUserId());
+  const onAdvanceRef = useRef(onAdvance);
+  useEffect(() => { onAdvanceRef.current = onAdvance; });
 
   useEffect(() => {
     if (!roomCode) return;
@@ -50,12 +53,12 @@ export function useRoom(roomCode: string | null, onAdvance?: (idx: number) => vo
       const msg = JSON.parse(evt.data as string) as RoomMsg;
 
       if (msg.type === "sync") {
-        onAdvance?.(msg.questionIndex);
+        onAdvanceRef.current?.(msg.questionIndex);
         setHighlights(deserializeHighlights(msg.highlights));
       }
 
       if (msg.type === "advance") {
-        onAdvance?.(msg.questionIndex);
+        onAdvanceRef.current?.(msg.questionIndex);
       }
 
       if (msg.type === "highlight") {
@@ -68,7 +71,7 @@ export function useRoom(roomCode: string | null, onAdvance?: (idx: number) => vo
       socketRef.current = null;
       setConnectionState("offline");
     };
-  }, [roomCode]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [roomCode]);
 
   const sendHighlight = useCallback(
     (questionId: string, wordIndex: number, active: boolean) => {
@@ -98,28 +101,3 @@ export function useRoom(roomCode: string | null, onAdvance?: (idx: number) => vo
   };
 }
 
-function applyHighlight(prev: HighlightMap, msg: HighlightMsg): HighlightMap {
-  const next = new Map(prev);
-  if (!next.has(msg.questionId)) next.set(msg.questionId, new Map());
-  const wordMap = new Map(next.get(msg.questionId)!);
-  const users = new Set(wordMap.get(msg.wordIndex) ?? []);
-  if (msg.active) users.add(msg.userId);
-  else users.delete(msg.userId);
-  wordMap.set(msg.wordIndex, users);
-  next.set(msg.questionId, wordMap);
-  return next;
-}
-
-function deserializeHighlights(
-  raw: Record<string, Record<number, string[]>>
-): HighlightMap {
-  const map: HighlightMap = new Map();
-  for (const [qId, words] of Object.entries(raw)) {
-    const wordMap = new Map<number, Set<string>>();
-    for (const [widxStr, users] of Object.entries(words)) {
-      wordMap.set(Number(widxStr), new Set(users));
-    }
-    map.set(qId, wordMap);
-  }
-  return map;
-}

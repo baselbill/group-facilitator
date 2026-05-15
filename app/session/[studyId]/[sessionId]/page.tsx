@@ -92,7 +92,11 @@ export default function SessionPage({ params }: Props) {
   }
 
   function startRoom() {
-    setRoomCode(generateRoomCode());
+    const code = generateRoomCode();
+    setRoomCode(code);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("room", code);
+    router.replace(`?${params.toString()}`);
   }
 
   function advance(state: "covered" | "skipped") {

@@ -41,11 +41,18 @@ export default class RoomServer implements Party.Server {
   }
 
   onMessage(message: string, sender: Party.Connection) {
-    const msg = JSON.parse(message) as RoomMsg;
+    let msg: RoomMsg;
+    try {
+      msg = JSON.parse(message) as RoomMsg;
+    } catch {
+      console.warn("[room] bad message from", sender.id);
+      return;
+    }
 
     if (msg.type === "advance") {
       this.questionIndex = msg.questionIndex;
-      // Clear highlights for questions behind current position
+      this.highlights = {};
+      // Broadcast to all participants so they advance to the same question
       this.room.broadcast(message);
     }
 

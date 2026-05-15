@@ -9,7 +9,6 @@ interface Props {
   studyId: string;
   sessionId: string;
   connectionState: ConnectionState;
-  participantCount?: number;
 }
 
 export default function RoomOverlay({
@@ -17,9 +16,11 @@ export default function RoomOverlay({
   studyId,
   sessionId,
   connectionState,
-  participantCount,
 }: Props) {
   const [showModal, setShowModal] = useState(false);
+  const [qrFailed, setQrFailed] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const joinUrl =
@@ -29,12 +30,24 @@ export default function RoomOverlay({
 
   useEffect(() => {
     if (!showModal || !canvasRef.current || !joinUrl) return;
+    setQrFailed(false);
     QRCode.toCanvas(canvasRef.current, joinUrl, {
       width: 200,
       margin: 1,
       color: { dark: "#3B2A1A", light: "#FAF7F2" },
-    });
+    }).catch(() => setQrFailed(true));
   }, [showModal, joinUrl]);
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(joinUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopyFailed(true);
+      setTimeout(() => setCopyFailed(false), 2000);
+    }
+  }
 
   const dotColor =
     connectionState === "open"
@@ -55,9 +68,6 @@ export default function RoomOverlay({
           style={{ backgroundColor: dotColor }}
         />
         <span className="room-badge__code">{roomCode}</span>
-        {participantCount !== undefined && (
-          <span className="room-badge__count">{participantCount}</span>
-        )}
       </button>
 
       {showModal && (
@@ -70,9 +80,12 @@ export default function RoomOverlay({
             onClick={(e) => e.stopPropagation()}
           >
             <p className="room-modal__label">Scan to join</p>
-            <canvas ref={canvasRef} className="room-modal__qr" />
+            {!qrFailed && <canvas ref={canvasRef} className="room-modal__qr" />}
             <p className="room-modal__code">{roomCode}</p>
             <p className="room-modal__url">{joinUrl}</p>
+            <button className="btn-secondary" onClick={handleCopy}>
+              {copied ? "Copied!" : copyFailed ? "Could not copy" : "Copy link"}
+            </button>
             <button
               className="btn-primary"
               onClick={() => setShowModal(false)}

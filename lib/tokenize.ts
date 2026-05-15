@@ -1,7 +1,7 @@
 export interface Token {
   text: string;
   isWord: boolean;
-  index: number; // position in token array
+  index: number; // word position (0-based); -1 for non-word tokens
 }
 
 export function tokenize(text: string): Token[] {

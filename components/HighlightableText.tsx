@@ -4,7 +4,6 @@ import { tokenize } from "@/lib/tokenize";
 
 interface Props {
   text: string;
-  questionId: string;
   userId: string;
   // wordIndex -> Set of userIds who highlighted it
   wordHighlights: Map<number, Set<string>> | undefined;
@@ -13,7 +12,6 @@ interface Props {
 
 export default function HighlightableText({
   text,
-  questionId: _questionId,
   userId,
   wordHighlights,
   onTap,

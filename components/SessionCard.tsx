@@ -87,7 +87,6 @@ export default function SessionCard({
             <p className="card-question">
               <HighlightableText
                 text={question.question_text}
-                questionId={question.id + "-q"}
                 userId={userId}
                 wordHighlights={highlights?.get(question.id + "-q")}
                 onTap={(wi, active) => onHighlight?.(question.id + "-q", wi, active)}
@@ -96,7 +95,6 @@ export default function SessionCard({
             <p className="card-answer">
               <HighlightableText
                 text={question.answer_text}
-                questionId={question.id + "-a"}
                 userId={userId}
                 wordHighlights={highlights?.get(question.id + "-a")}
                 onTap={(wi, active) => onHighlight?.(question.id + "-a", wi, active)}
@@ -148,7 +146,11 @@ export default function SessionCard({
         </div>
 
         {inRoom && (
-          <p className="room-hint">Tap any word to highlight it for the group.</p>
+          <p className="room-hint">
+            {connectionState === "offline"
+              ? "Offline — highlights won’t sync until you reconnect."
+              : "Tap any word to highlight it for the group."}
+          </p>
         )}
       </div>
 
