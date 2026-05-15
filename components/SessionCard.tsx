@@ -15,6 +15,8 @@ interface Props {
   isLast: boolean;
   onNext: () => void;
   onSkip: () => void;
+  onPrevious?: () => void;
+  onExit?: () => void;
   // Room props — all optional; omit for local-only mode
   roomCode?: string;
   studyId?: string;
@@ -32,6 +34,8 @@ export default function SessionCard({
   isLast,
   onNext,
   onSkip,
+  onPrevious,
+  onExit,
   roomCode,
   studyId,
   sessionId,
@@ -74,7 +78,13 @@ export default function SessionCard({
     <div className="card-screen">
       {/* Header */}
       <header className="card-header">
-        <span className="card-study-name">Heidelberg Catechism</span>
+        {onExit ? (
+          <button className="nav-back" onClick={onExit} aria-label="Back to sessions">
+            ← Sessions
+          </button>
+        ) : (
+          <span className="card-study-name">Heidelberg Catechism</span>
+        )}
         <span className="card-session-label">
           Q{questionIndex + 1} · {totalQuestions} this week
         </span>
@@ -173,6 +183,11 @@ export default function SessionCard({
 
       {/* Bottom bar */}
       <div className="card-footer">
+        {onPrevious && questionIndex > 0 && (
+          <button className="btn-prev" onClick={onPrevious}>
+            ← Back
+          </button>
+        )}
         <div className="bottom-bar">
           <button className="btn-skip" onClick={onSkip}>
             Skip

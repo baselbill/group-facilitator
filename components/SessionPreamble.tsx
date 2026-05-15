@@ -7,6 +7,7 @@ interface Props {
   onStart: () => void;
   onStartRoom?: () => void;
   roomCode?: string | null;
+  onBack?: () => void;
 }
 
 export default function SessionPreamble({
@@ -16,9 +17,15 @@ export default function SessionPreamble({
   onStart,
   onStartRoom,
   roomCode,
+  onBack,
 }: Props) {
   return (
     <div className="preamble-container">
+      {onBack && (
+        <button className="nav-back" onClick={onBack} aria-label="Back to sessions">
+          ← Sessions
+        </button>
+      )}
       <div className="preamble-body">
         <p className="preamble-label">Starting session</p>
         <h1 className="preamble-title">{title}</h1>

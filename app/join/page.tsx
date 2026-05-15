@@ -2,6 +2,7 @@
 
 import { Suspense, use, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface Props {
   searchParams: Promise<{ room?: string; study?: string; session?: string }>;
@@ -72,6 +73,7 @@ function JoinPageInner({ searchParams }: Props) {
   return (
     <main className="page-root">
       <div className="join-screen">
+        <Link href="/" className="nav-back">← Home</Link>
         <p className="join-heading">Join a session</p>
         <JoinForm initialRoom={room} study={study} session={session} />
       </div>

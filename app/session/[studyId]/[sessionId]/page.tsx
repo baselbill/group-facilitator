@@ -99,6 +99,13 @@ export default function SessionPage({ params }: Props) {
     router.replace(`?${params.toString()}`);
   }
 
+  function previous() {
+    if (questionIndex === 0) return;
+    const prevIndex = questionIndex - 1;
+    setQuestionIndex(prevIndex);
+    sendAdvance(prevIndex);
+  }
+
   function advance(state: "covered" | "skipped") {
     writeState(studyId, sessionId, currentQuestion.id, state);
     const nextIndex = isLast ? questionIndex : questionIndex + 1;
@@ -121,6 +128,7 @@ export default function SessionPage({ params }: Props) {
           onStart={handleStart}
           onStartRoom={startRoom}
           roomCode={roomCode}
+          onBack={() => router.push("/")}
         />
       </main>
     );
@@ -143,6 +151,8 @@ export default function SessionPage({ params }: Props) {
         isLast={isLast}
         onNext={() => advance("covered")}
         onSkip={() => advance("skipped")}
+        onPrevious={previous}
+        onExit={() => router.push("/")}
         roomCode={roomCode ?? undefined}
         studyId={studyId}
         sessionId={sessionId}
